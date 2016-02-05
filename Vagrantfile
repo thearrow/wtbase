@@ -9,6 +9,8 @@ Vagrant.configure(2) do |config|
   config.vm.provision :docker
   config.vm.provision :docker_compose, yml: "/vagrant/docker-compose.yml", run: "always"
 
+  config.vm.synced_folder ".", "/vagrant", type: 'virtualbox'
+
   config.vm.network "forwarded_port", guest: 8000, host: 8000
 
   config.vm.provision "shell", inline: <<-SHELL
