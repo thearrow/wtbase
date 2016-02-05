@@ -1,4 +1,5 @@
-A simple, dockerized wagtail app started with the wagtail generator.
+A skeleton dockerized Wagtail app using PostgreSQL and Gunicorn.
+(Started with the wagtail generator.)
 
 ## Development Setup
 
@@ -10,7 +11,6 @@ host > vagrant plugin install vagrant-docker-compose
 host > vagrant up
 host > vagrant ssh
 
-guest > migrate
 guest > createsuperuser
 ```
 
@@ -48,3 +48,6 @@ Restart docker-compose:
 ```
 guest > restart (restart docker-compose)
 ```
+
+## Database
+PostgreSQL is used for development and is available for connection from the host machine for inspection at 0.0.0.0:5432.
