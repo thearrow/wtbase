@@ -1,0 +1,25 @@
+web:
+  build: .
+  command: python manage.py runserver 0.0.0.0:8000
+  volumes:
+    - .:/app
+  ports:
+    - "8000:8000"
+  # links:
+  #   - db
+
+# db:
+#     image: postgres
+#     ports:
+#         - "5432:5432"
+# cache:
+#     image: redis
+#     command: redis-server --appendonly yes
+#     ports:
+#         - "6379:6379"
+# search:
+#     image: elasticsearch
+#     command: elasticsearch
+#     ports:
+#         - "9200:9200"
+#         - "9300:9300"

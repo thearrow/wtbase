@@ -1,0 +1,42 @@
+# top-most EditorConfig file
+root = true
+
+[*]
+insert_final_newline = true
+
+[*.py]
+indent_style = space
+indent_size = 4
+
+[*.js]
+indent_style = space
+indent_size = 4
+
+[*.scss]
+indent_style = space
+indent_size = 4
+
+[*.html]
+indent_style = space
+indent_size = 4
+charset = utf-8
+
+[*.json]
+indent_style = space
+indent_size = 4
+
+[*.sh]
+end_of_line = lf
+insert_final_newline = false
+
+[*.yml]
+indent_style = space
+indent_size = 2
+
+[*.md]
+indent_style = space
+indent_size = 4
+
+[Vagrantfile]
+indent_style = space
+indent_size = 2
