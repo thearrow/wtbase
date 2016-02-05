@@ -16,6 +16,8 @@ guest > createsuperuser
 
 Open http://0.0.0.0:8000 in browser
 
+## Database
+PostgreSQL is used for development and is available for connection from the host machine for inspection at 0.0.0.0:5432.
 
 ## Recipes
 
@@ -36,18 +38,15 @@ guest > createsuperuser
 
 Start docker-compose:
 ```
-guest > start (start docker-compose)
+guest > start
 ```
 
 Stop docker-compose:
 ```
-guest > stop (stop docker-compose)
+guest > stop
 ```
 
 Restart docker-compose:
 ```
-guest > restart (restart docker-compose)
+guest > restart
 ```
-
-## Database
-PostgreSQL is used for development and is available for connection from the host machine for inspection at 0.0.0.0:5432.
