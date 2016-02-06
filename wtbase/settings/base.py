@@ -12,14 +12,25 @@ https://docs.djangoproject.com/en/1.9/ref/settings/
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
+import environ
 
 PROJECT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 BASE_DIR = os.path.dirname(PROJECT_DIR)
 
+env = environ.Env(DEBUG=(bool, False),)
+env.read_env('.env')
 
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/1.9/howto/deployment/checklist/
+DEBUG = env('DEBUG')
 
+SECRET_KEY = env("SECRET_KEY", default='CHANGEME!!!')
+
+EMAIL_BACKEND = env("EMAIL_BACKEND",
+                    default='django.core.mail.backends.console.EmailBackend')
+
+DATABASES = {
+    'default': env.db_url("DATABASE_URL",
+                          default="postgres://postgres@db:5432/postgres"),
+}
 
 # Application definition
 
@@ -86,21 +97,6 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'wtbase.wsgi.application'
-
-
-# Database
-# https://docs.djangoproject.com/en/1.9/ref/settings/#databases
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'postgres',
-        'USER': 'postgres',
-        'PASSWORD': '',
-        'HOST': 'db',
-        'PORT': '',
-    }
-}
 
 
 # Internationalization
