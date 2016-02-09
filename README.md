@@ -1,8 +1,8 @@
 A skeleton dockerized Wagtail app using PostgreSQL and Gunicorn.
 (Started with the wagtail generator.)
 
-## Development Setup
 
+## Development Setup
 ```
 host > git clone {repo}
 host > cd {repo}
@@ -16,11 +16,12 @@ guest > createsuperuser
 
 Open http://0.0.0.0:8000 in browser
 
+
 ## Database
 PostgreSQL is used for development and is available for connection from the host machine for inspection at 0.0.0.0:5432.
 
-## Recipes
 
+## Recipes
 Run manage.py command:
 ```
 guest > wt {command}
@@ -59,4 +60,41 @@ guest > build
 Destroy everything docker-related (stop and remove all containers + images):
 ```
 guest > cleandocker
+```
+
+
+## Deployment
+Deploy:
+
+*NOTE:* Will probably want to move to hosted DB solution for prod: remove db from `docker-compose-prod.yml` and update `DATABASE_URL` in `.env.prod` accordingly.
+
+Make a `.env.prod` file containing:
+```
+DEBUG=False
+ALLOWED_HOSTS=['*']
+COMPRESS_OFFLINE=True
+SECRET_KEY={YOUR SECRET KEY}
+DATABASE_URL={PROPER DATABASE URL}
+```
+
+```
+guest > docker login
+{ENTER DOCKER HUB LOGIN CREDENTIALS}
+
+guest > sh deploy.sh
+
+guest > ecs-cli configure --region us-east-1 --access-key {AWS_ACCESS_KEY_ID} --secret-key {AWS_SECRET_ACCESS_KEY} --cluster wtbase
+
+guest > ecs-cli up --keypair {KEY_PAIR_NAME} --capability-iam --size 1 --instance-type t2.micro
+
+guest > ecs-cli compose -f docker-compose-prod.yml service up
+
+guest > ecs-cli ps
+```
+
+Shutdown:
+```
+guest > ecs-cli compose -f docker-compose-prod.yml service rm
+
+guest > ecs-cli down --force
 ```

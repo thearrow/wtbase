@@ -10,6 +10,7 @@ COPY . /app/
 
 RUN rm -rf static/dist/
 RUN python manage.py collectstatic --noinput
+RUN python manage.py compress
 
 EXPOSE 8000
 

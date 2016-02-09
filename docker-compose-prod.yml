@@ -1,11 +1,22 @@
 web:
-  build: .
-  volumes:
-    - .:/app
+  image: thearrow/wtbase
+  links:
+    - db
+  cpu_shares: 100
+  mem_limit: 490000000
+
+db:
+  image: postgres
+  ports:
+    - "5432:5432"
+  cpu_shares: 100
+  mem_limit: 245000000
 
 static:
-  build: ./static
+  image: thearrow/wtbase-static
   ports:
-    - "8000:80"
+    - "80:80"
   links:
     - web
+  cpu_shares: 100
+  mem_limit: 245000000
