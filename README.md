@@ -50,3 +50,13 @@ Restart docker-compose:
 ```
 guest > restart
 ```
+
+Rebuild all docker-compose images:
+```
+guest > build
+```
+
+Destroy everything docker-related (stop and remove all containers + images):
+```
+guest > cleandocker
+```
