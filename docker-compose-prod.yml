@@ -1,0 +1,18 @@
+web:
+  build: .
+  volumes:
+    - .:/app
+  links:
+    - db
+
+db:
+  image: postgres
+  ports:
+    - "5432:5432"
+
+static:
+  build: ./static
+  ports:
+    - "8000:80"
+  links:
+    - web

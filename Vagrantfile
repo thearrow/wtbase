@@ -22,6 +22,8 @@ Vagrant.configure(2) do |config|
     echo "alias start='docker-compose up'" >> /home/vagrant/.bashrc
     echo "alias stop='docker-compose stop'" >> /home/vagrant/.bashrc
     echo "alias restart='docker-compose restart'" >> /home/vagrant/.bashrc
+    echo "alias build='docker-compose build'" >> /home/vagrant/.bashrc
+    echo "alias cleandocker='docker stop $(docker ps -a -q) && docker rm $(docker ps -a -q) && docker rmi $(docker images -q)'" >> /home/vagrant/.bashrc
     echo "cd /vagrant" >> /home/vagrant/.bashrc
   SHELL
   # Create a private network, which allows host-only access to the machine
