@@ -20,7 +20,8 @@ BASE_DIR = os.path.dirname(PROJECT_DIR)
 env = environ.Env(DEBUG=(bool, False),)
 env.read_env('.env')
 
-DEBUG = env('DEBUG')
+DEBUG = env('DEBUG', default=False)
+ALLOWED_HOSTS = env('ALLOWED_HOSTS', default=[])
 
 SECRET_KEY = env("SECRET_KEY", default='CHANGEME!!!')
 
@@ -103,13 +104,9 @@ WSGI_APPLICATION = 'wtbase.wsgi.application'
 # https://docs.djangoproject.com/en/1.9/topics/i18n/
 
 LANGUAGE_CODE = 'en-us'
-
 TIME_ZONE = 'UTC'
-
 USE_I18N = True
-
 USE_L10N = True
-
 USE_TZ = True
 
 
@@ -123,10 +120,10 @@ STATICFILES_FINDERS = [
 ]
 
 STATICFILES_DIRS = [
-    os.path.join(PROJECT_DIR, 'static'),
+    os.path.join(BASE_DIR, 'static'),
 ]
 
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+STATIC_ROOT = os.path.join(BASE_DIR, 'static', 'dist')
 STATIC_URL = '/static/'
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')

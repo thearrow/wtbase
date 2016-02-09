@@ -1,5 +1,6 @@
 #!/bin/bash
 
+python manage.py collectstatic --noinput
 python manage.py migrate
 
 # Prepare log files and start outputting logs to stdout
