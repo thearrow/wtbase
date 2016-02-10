@@ -12,6 +12,7 @@ host > vagrant up
 host > vagrant ssh
 
 guest > createsuperuser
+guest > start
 ```
 
 Open http://0.0.0.0:8000 in browser
@@ -57,9 +58,14 @@ Rebuild all docker-compose images:
 guest > build
 ```
 
-Destroy everything docker-related (stop and remove all containers + images):
+Stop and remove all docker containers:
 ```
-guest > cleandocker
+guest > dockerkill
+```
+
+Delete all docker images:
+```
+guest > dockerclean
 ```
 
 
@@ -72,7 +78,6 @@ Make a `.env.prod` file containing:
 ```
 DEBUG=False
 ALLOWED_HOSTS=['*']
-COMPRESS_OFFLINE=True
 SECRET_KEY={YOUR SECRET KEY}
 DATABASE_URL={PROPER DATABASE URL}
 ```

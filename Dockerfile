@@ -8,9 +8,10 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 COPY . /app/
 
+RUN /app/wagtail.sh
+
 RUN rm -rf static/dist/
 RUN python manage.py collectstatic --noinput
-RUN python manage.py compress
 
 EXPOSE 8000
 
