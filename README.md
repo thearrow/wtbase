@@ -13,8 +13,8 @@ host > vagrant plugin install vagrant-docker-compose
 host > vagrant up
 host > vagrant ssh
 
-guest > start
 guest > createsuperuser
+guest > start
 ```
 
 Open http://0.0.0.0:8000 in browser
