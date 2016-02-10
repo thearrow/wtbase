@@ -1,6 +1,8 @@
 A skeleton dockerized Wagtail app using PostgreSQL and Gunicorn.
 (Started with the wagtail generator.)
 
+> Note: Currently the docker container for the web app pulls a specific commit from Github for wagtail (without django-compressor) and manually builds the static assets for it with gulp. See [wagtail.sh](https://github.com/thearrow/wtbase/blob/master/wagtail.sh).
+
 
 ## Development Setup
 ```
@@ -11,100 +13,91 @@ host > vagrant plugin install vagrant-docker-compose
 host > vagrant up
 host > vagrant ssh
 
-guest > createsuperuser
 guest > start
+guest > createsuperuser
 ```
 
 Open http://0.0.0.0:8000 in browser
+
 
 
 ## Database
 PostgreSQL is used for development and is available for connection from the host machine for inspection at 0.0.0.0:5432.
 
 
-## Recipes
-Run manage.py command:
-```
-guest > wt {command}
-```
 
-Run migration:
-```
-guest > migrate
-```
+## Aliases
+Available for convenience on the Vagrant Guest.
 
-Create super user:
-```
-guest > createsuperuser
-```
+---
 
-Start docker-compose:
-```
-guest > start
-```
+######  Docker Compose:
 
-Stop docker-compose:
-```
-guest > stop
-```
+`dc {command}`: run docker-compose command
 
-Restart docker-compose:
-```
-guest > restart
-```
+`start`: start all docker-compose containers
 
-Rebuild all docker-compose images:
-```
-guest > build
-```
+`stop`: stop all docker-compose containers
 
-Stop and remove all docker containers:
-```
-guest > dockerkill
-```
+`restart`: restart all docker-compose containers
 
-Delete all docker images:
-```
-guest > dockerclean
-```
+`build`: rebuild all docker-compose images
+
+---
+
+###### Django:
+
+`wt {command}`: run manage.py command
+
+`migrate`: run migration
+
+`createsuperuser`: create a super user
+
+---
+
+###### Docker:
+
+`dockerkill`: stop and remove all docker containers
+
+`dockerclean`: delete all docker images
+
 
 
 ## Deployment
-Deploy:
-
-*NOTE:* Will probably want to move to hosted DB solution for prod: remove db from `docker-compose-prod.yml` and update `DATABASE_URL` in `.env.prod` accordingly.
+> *NOTE:* Will probably want to move to hosted DB solution for real production: remove `db` from `docker-compose-prod.yml` and set `DATABASE_URL` in `.env.prod` accordingly.
 
 Make a `.env.prod` file containing:
 ```
 DEBUG=False
-ALLOWED_HOSTS=['*']
+ALLOWED_HOSTS=['{APP HOSTS}']
 SECRET_KEY={YOUR SECRET KEY}
-DATABASE_URL={PROPER DATABASE URL}
+DATABASE_URL={YOUR DATABASE URL}
 ```
 
-Deploy from Vagrant:
+Deploy from Vagrant Guest:
 ```
-guest > docker login
+docker login
 {ENTER DOCKER HUB LOGIN CREDENTIALS}
 
-guest > sh deploy.sh
+sh deploy.sh
 
-guest > ecs-cli configure --region us-east-1 --access-key {AWS_ACCESS_KEY_ID} --secret-key {AWS_SECRET_ACCESS_KEY} --cluster wtbase
+ecs-cli configure --region us-east-1 --access-key {AWS_ACCESS_KEY_ID} --secret-key {AWS_SECRET_ACCESS_KEY} --cluster wtbase
 
-guest > ecs-cli up --keypair {KEY_PAIR_NAME} --capability-iam --size 1 --instance-type t2.micro
+ecs-cli up --keypair {KEY_PAIR_NAME} --capability-iam --size 1 --instance-type t2.micro
 
-guest > ecs-cli compose -f docker-compose-prod.yml service up
+ecs-cli compose -f docker-compose-prod.yml service up
 ```
 
 On container EC2 instance:
 ```
 docker ps
+
 docker exec -it {CONTAINER_ID} python manage.py createsuperuser
 ```
 
-Shutdown from Vagrant:
+Shutdown from Vagrant Guest:
 ```
-guest > ecs-cli compose -f docker-compose-prod.yml service rm
+ecs-cli compose -f docker-compose-prod.yml service rm
 
-guest > ecs-cli down --force
+ecs-cli down --force
 ```

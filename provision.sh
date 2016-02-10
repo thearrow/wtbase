@@ -3,6 +3,7 @@ echo "alias l='ls -la'" >> /home/vagrant/.bashrc
 echo "alias wt='docker-compose run web python manage.py'" >> /home/vagrant/.bashrc
 echo "alias migrate='wt migrate'" >> /home/vagrant/.bashrc
 echo "alias createsuperuser='wt createsuperuser'" >> /home/vagrant/.bashrc
+echo "alias dc='docker-compose'" >> /home/vagrant/.bashrc
 echo "alias start='docker-compose up'" >> /home/vagrant/.bashrc
 echo "alias stop='docker-compose stop'" >> /home/vagrant/.bashrc
 echo "alias restart='docker-compose restart'" >> /home/vagrant/.bashrc
