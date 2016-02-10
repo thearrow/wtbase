@@ -82,6 +82,7 @@ SECRET_KEY={YOUR SECRET KEY}
 DATABASE_URL={PROPER DATABASE URL}
 ```
 
+Deploy from Vagrant:
 ```
 guest > docker login
 {ENTER DOCKER HUB LOGIN CREDENTIALS}
@@ -93,11 +94,15 @@ guest > ecs-cli configure --region us-east-1 --access-key {AWS_ACCESS_KEY_ID} --
 guest > ecs-cli up --keypair {KEY_PAIR_NAME} --capability-iam --size 1 --instance-type t2.micro
 
 guest > ecs-cli compose -f docker-compose-prod.yml service up
-
-guest > ecs-cli ps
 ```
 
-Shutdown:
+On container EC2 instance:
+```
+docker ps
+docker exec -it {CONTAINER_ID} python manage.py createsuperuser
+```
+
+Shutdown from Vagrant:
 ```
 guest > ecs-cli compose -f docker-compose-prod.yml service rm
 

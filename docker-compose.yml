@@ -2,6 +2,8 @@ web:
   build: .
   volumes:
     - .:/app
+    - ./static/dist:/app/static/dist
+    - ./static/media:/app/static/media
   ports:
     - "8000:8000"
   links:
