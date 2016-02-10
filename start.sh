@@ -1,5 +1,5 @@
 #!/bin/bash
-sleep 5
+sleep 30
 python manage.py migrate
 
 # Prepare log files and start outputting logs to stdout
