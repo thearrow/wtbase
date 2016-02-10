@@ -1,5 +1,5 @@
 #!/bin/bash
-sleep 30
+sleep 10 # wait for DB to spin up
 python manage.py migrate
 
 # Prepare log files and start outputting logs to stdout
